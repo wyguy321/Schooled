@@ -11,9 +11,7 @@ gem 'paperclip'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
-group :development do
-  gem 'thin'
-end
+
 
 group :test do
   gem 'shoulda'
