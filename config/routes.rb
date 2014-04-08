@@ -1,5 +1,9 @@
 Treebook::Application.routes.draw do
   
+    get "welcome/index"
+   root to:"welcome#index"
+
+   root to: 'devise/sessions#new'
   resources :activities, only: [:index]
 
   get "profiles/show"
@@ -27,7 +31,7 @@ Treebook::Application.routes.draw do
 
   resources :statuses
   get 'feed', to: 'statuses#index', as: :feed
-  root to: 'statuses#index'
+ 
 
   get '/:id', to: 'profiles#show', as: 'profile'
 
