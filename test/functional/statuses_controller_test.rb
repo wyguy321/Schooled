@@ -57,11 +57,18 @@ class StatusesControllerTest < ActionController::TestCase
     assert_redirected_to status_path(assigns(:status))
   end
 
+  test "should create an activity item for the status when logged in" do
+    sign_in users(:jason)
+    assert_difference('Activity.count') do
+      post :create, status: { content: @status.content }
+    end
+  end
+
   test "should create status for the current user when logged in" do
     sign_in users(:jason)
 
     assert_difference('Status.count') do
-      post :create, status: { content: @status.content, user_id: users(:jim).id }
+      post :create, status: { content: @status.content }
     end
 
     assert_redirected_to status_path(assigns(:status))
@@ -97,10 +104,18 @@ class StatusesControllerTest < ActionController::TestCase
     assert_redirected_to status_path(assigns(:status))
   end
 
+  test "should create an activity item when the status is updated" do
+    sign_in users(:jason)
+    assert_difference 'Activity.count' do
+      put :update, id: @status, status: { content: @status.content }
+    end
+  end
+
+
   test "should update status for the current user when logged in" do
     sign_in users(:jason)
     put :update, id: @status, status: { content: @status.content, user_id: users(:jim).id }
-    assert_redirected_to status_path(assigns(:status))
+    assert_response :error
     assert_equal assigns(:status).user_id, users(:jason).id
   end
 
